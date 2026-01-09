@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\DB;
 use App\Models\Message;
 
 class MessageController extends Controller
@@ -22,6 +23,12 @@ class MessageController extends Controller
         $message->body = $request->body;
         $message->save();
 
+        return redirect('/messages');
+    }
+
+    public function destroy(string $id) : RedirectResponse
+    {
+        DB::delete('delete from messages where id = ?', [$id]);
         return redirect('/messages');
     }
 }

@@ -11,11 +11,18 @@
             @csrf
             <input type="text" name="body">
             <input type="submit" value="投稿">    
-        </from>
+        </form>
         <hr>
         <ul>
             @foreach ($messages as $message)
-                <li>{{ $message->body }}</li>
+                <li>
+                    <form action="/messages/{{ $message->id }}/delete" method="POST">
+                        {{ $message->body }}
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="削除">
+                    </form>
+                </li>
             @endforeach
         </ul>
     </main>

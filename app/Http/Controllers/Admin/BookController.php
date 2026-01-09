@@ -13,6 +13,7 @@ use App\Http\Requests\BookPutRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BookController extends Controller
 {
@@ -30,6 +31,7 @@ class BookController extends Controller
 
     public function show(Book $book) : View
     {
+        Log::info('書籍情報が参照されました。ID=' . $book->id);
         return view('admin/book/show', compact('book'));
     }
 

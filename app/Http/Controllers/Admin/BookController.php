@@ -14,9 +14,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class BookController extends Controller
 {
+    use AuthorizesRequests;
     public function index() : Response
     {
         $books = Book::with('category')
@@ -31,6 +34,9 @@ class BookController extends Controller
 
     public function show(Book $book) : View
     {
+        // //example-comのみ許可
+        //$this->authorize('example-com-user');
+        
         Log::info('書籍情報が参照されました。ID=' . $book->id);
         return view('admin/book/show', compact('book'));
     }
@@ -91,6 +97,7 @@ class BookController extends Controller
         $book->category_id = $request->category_id;
         $book->title = $request->title;
         $book->price = $request->price;
+        $book->admin_id = Auth::id();
 
         DB::transaction(function() use($book, $request)
         {

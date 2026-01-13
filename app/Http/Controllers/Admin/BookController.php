@@ -79,14 +79,14 @@ class BookController extends Controller
             $book->authors()->sync($request->author_ids);
         });
 
-        return redirect(route('book.index'))->with('messages',$book->title . 'を変更しました。' );
+        return redirect(route('book.index'))->with('message',$book->title . 'を変更しました。' );
     }
 
     public function destroy(Book $book) : RedirectResponse
     {
         // 削除
         $book->delete();
-        return redirect(route('book.index'))->with('messages',$book->title . 'を削除しました。' );
+        return redirect(route('book.index'))->with('message',$book->title . 'を削除しました。' );
     }
     
     public function store(BookPostRequest $request): RedirectResponse
